@@ -1,10 +1,8 @@
 # ECE 285 Homework 1: VAE for Chest X-ray Generation
 
-PyTorch implementation of a convolutional variational autoencoder for the Kaggle Chest X-Ray Images (Pneumonia) dataset.
+PyTorch implementation of a convolutional variational autoencoder for the Kaggle Chest X-Ray Images (Pneumonia) dataset. The assignment report is submitted separately as a two-page PDF; this public repository hosts the implementation code.
 
-Source code repository: https://github.com/MarinaMackay/vae-chest-xray-homework1
-
-## Files
+## Source files
 
 - `vae.py`: convolutional VAE model.
 - `dataset.py`: image loading and preprocessing.
@@ -21,9 +19,9 @@ Use Python 3.10 or 3.11, then install dependencies:
 python -m pip install -r requirements.txt
 ```
 
-Download and unpack the Kaggle dataset so the folders are under `data/chest_xray/{train,val,test}/{NORMAL,PNEUMONIA}/`. The dataset is not included here.
+Download and unpack the Kaggle dataset so the folders are under `data/chest_xray/{train,val,test}/{NORMAL,PNEUMONIA}/`. The dataset is not included or redistributed here.
 
-## Run
+## Reproduce
 
 Run commands from the repository directory:
 
@@ -34,8 +32,6 @@ python metrics.py
 python metrics.py --max-images 512
 ```
 
-Training runs 100 epochs and writes the checkpoint and loss history under `results/`. Generation uses that checkpoint and requires the test split for reconstructions. Metric evaluation uses train and validation images and downloads the torchvision ImageNet Inception V3 weights on first run.
+Training runs 100 epochs and writes a checkpoint and loss history under `results/`. Run training before generation or evaluation; generation also needs the test split, while full metric evaluation needs train and validation splits. The metrics script downloads torchvision's ImageNet Inception V3 weights on first run.
 
-The submitted report and saved model/results are provided in the Gradescope homework submission archive. The report documents metric settings and limitations; its reported FID and IS use PyTorch-Ignite 0.5.2, with CPU inference, PIL bilinear resizing to 299×299, and 5,232 generated versus 5,232 train/validation images. Ignite's default FID here is based on 1,000-class probabilities and is not directly comparable to the common 2,048-dimensional pool3 FID. Neither metric measures clinical quality.
-
-The earlier reported real-data FID of 4.6 is unsupported and is not claimed. No retraining was performed for this submission.
+The report's recorded full evaluation used PyTorch-Ignite 0.5.2 on CPU, PIL bilinear resizing to 299×299, and 5,232 generated versus 5,232 train/validation images. Ignite's default FID here uses 1,000-class probability outputs and is not directly comparable with the common 2,048-dimensional pool3 FID. These ImageNet-based metrics are not clinical quality measures. The earlier real-data FID of 4.6 is unsupported and is not claimed.
